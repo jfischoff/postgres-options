@@ -1,5 +1,5 @@
 name:                postgres-options
-version:             0.3.0.1
+version:             0.1.0.0
 synopsis:            An Options type representing options for postgres connections
 description:         This package exports an Options type representing options for postgres connections
 homepage:            https://github.com/jfischoff/postgres-options#readme
@@ -17,15 +17,6 @@ library
   hs-source-dirs:      src
   exposed-modules:     Database.PostgreSQL.Simple.Options
   build-depends: base >= 4.6 && < 5
-               , postgresql-simple
-               , optparse-applicative
-               , bytestring
-               , either
-               , optparse-generic
-               , data-default
-               , split
-               , uri-bytestring
-               , generic-deriving
   default-language:    Haskell2010
   ghc-options: -Wall
                -fno-warn-unused-do-bind
