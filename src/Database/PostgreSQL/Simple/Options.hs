@@ -2,14 +2,21 @@
    'Connection'
 -}
 
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE TupleSections #-}
 
-module Database.PostgreSQL.Simple.Options where
+module Database.PostgreSQL.Simple.Options
+  ( Options(..)
+  , toArgs
+  , toConnectionString
+  ) where
 
-import GHC.Generics (Generic)
-import Data.Typeable (Typeable)
+import Data.ByteString (ByteString)
+import qualified Data.ByteString.Char8 as BSC
 import Data.Maybe (Maybe, maybeToList)
+import Data.Typeable (Typeable)
+import GHC.Generics (Generic)
 
 data Options = Options
   { oHost                    :: Maybe String
@@ -46,3 +53,35 @@ toArgs Options {..} =
   ++ (("--password=" <>) <$> maybeToList oPassword)
   ++ ((\x -> "--host=" <> show x) <$> maybeToList oPort)
 
+toConnectionString :: Options -> ByteString
+toConnectionString Options {..} = BSC.pack $ unwords $ map (\(k, v) -> k <> "=" <> v)
+  $  maybeToPairStr "host" oHost
+  <> maybeToPairStr "hostaddr" oHostaddr
+  <> [ ("dbname", oDbname)
+     ]
+  <> maybeToPair "port" oPort
+  <> maybeToPairStr "password" oPassword
+  <> maybeToPairStr "user" oUser
+  <> maybeToPair "connect_timeout" oConnectTimeout
+  <> maybeToPairStr "client_encoding" oClientEncoding
+  <> maybeToPairStr "options" oOptions
+  <> maybeToPairStr "fallback_applicationName" oFallbackApplicationName
+  <> maybeToPair "keepalives" oKeepalives
+  <> maybeToPair "keepalives_idle" oKeepalivesIdle
+  <> maybeToPair "keepalives_count" oKeepalivesCount
+  <> maybeToPairStr "sslmode" oSslmode
+  <> maybeToPair "requiressl" oRequiressl
+  <> maybeToPair "sslcompression" oSslcompression
+  <> maybeToPairStr "sslcert" oSslcert
+  <> maybeToPairStr "sslkey" oSslkey
+  <> maybeToPairStr "sslrootcert" oSslrootcert
+  <> maybeToPairStr "requirepeer" oRequirepeer
+  <> maybeToPairStr "krbsrvname" oKrbsrvname
+  <> maybeToPairStr "gsslib" oGsslib
+  <> maybeToPairStr "service" oService
+  where
+  maybeToPairStr :: String -> Maybe String -> [(String, String)]
+  maybeToPairStr k mv = (k,) <$> maybeToList mv
+
+  maybeToPair :: Show a => String -> Maybe a -> [(String, String)]
+  maybeToPair k mv = (\v -> (k, show v)) <$> maybeToList mv
