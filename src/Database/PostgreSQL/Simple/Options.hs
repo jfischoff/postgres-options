@@ -8,6 +8,7 @@
 
 module Database.PostgreSQL.Simple.Options
   ( Options(..)
+  , defaultOptions
   , toArgs
   , toConnectionString
   ) where
@@ -85,3 +86,30 @@ toConnectionString Options {..} = BSC.pack $ unwords $ map (\(k, v) -> k <> "=" 
 
   maybeToPair :: Show a => String -> Maybe a -> [(String, String)]
   maybeToPair k mv = (\v -> (k, show v)) <$> maybeToList mv
+
+defaultOptions :: String -> Options
+defaultOptions dbName = Options {
+    oHost                    = Nothing
+  , oHostaddr                = Nothing
+  , oPort                    = Nothing
+  , oUser                    = Nothing
+  , oPassword                = Nothing
+  , oDbname                  = dbName
+  , oConnectTimeout          = Nothing
+  , oClientEncoding          = Nothing
+  , oOptions                 = Nothing
+  , oFallbackApplicationName = Nothing
+  , oKeepalives              = Nothing
+  , oKeepalivesIdle          = Nothing
+  , oKeepalivesCount         = Nothing
+  , oSslmode                 = Nothing
+  , oRequiressl              = Nothing
+  , oSslcompression          = Nothing
+  , oSslcert                 = Nothing
+  , oSslkey                  = Nothing
+  , oSslrootcert             = Nothing
+  , oRequirepeer             = Nothing
+  , oKrbsrvname              = Nothing
+  , oGsslib                  = Nothing
+  , oService                 = Nothing
+}
