@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: generic-monoid-0.1.0.0@sha256:372875d12742b97befaacbd08a35c2e73cc3821a3b7a09ec1b17a079d0b24ff7,856
+    pantry-tree:
+      size: 393
+      sha256: 97b556af7f3209f1da5099f50727008d771b72ac0b64b4a640c20f1621eb669b
+  original:
+    hackage: generic-monoid-0.1.0.0@sha256:372875d12742b97befaacbd08a35c2e73cc3821a3b7a09ec1b17a079d0b24ff7,856
 snapshots:
 - completed:
     size: 500539

@@ -12,6 +12,7 @@ module Database.PostgreSQL.Simple.Options
 import Data.Maybe (Maybe, maybeToList)
 import Data.Typeable (Typeable)
 import GHC.Generics (Generic)
+import Data.Monoid.Generic
 import Data.List (intercalate)
 import Data.List.Split (splitOn)
 import Text.Read (readMaybe)
@@ -20,7 +21,6 @@ import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Char8 as BSC
 import Data.Monoid
-import Generics.Deriving.Monoid (gmappenddefault, gmemptydefault)
 import Control.Monad ((<=<), foldM)
 import Control.Applicative
 
@@ -49,13 +49,9 @@ data Options = Options
   , krbsrvname              :: Last String
   , gsslib                  :: Last String
   , service                 :: Last String
-  } deriving (Show, Eq, Read, Ord, Generic, Typeable)
-
-instance Semigroup Options where
-  (<>) = gmappenddefault
-
-instance Monoid Options where
-  mempty = gmemptydefault
+  } deriving stock (Show, Eq, Read, Ord, Generic, Typeable)
+    deriving Semigroup via GenericSemigroup Options
+    deriving Monoid    via GenericMonoid Options
 
 -- | Make a key value postgresql option string.
 toConnectionString :: Options -> ByteString

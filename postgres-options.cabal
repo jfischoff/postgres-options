@@ -1,5 +1,5 @@
 name:                postgres-options
-version:             0.1.0.1
+version:             0.2.0.0
 synopsis:            An Options type representing options for postgres connections
 description:         This package exports an Options type representing options for postgres connections
 homepage:            https://github.com/jfischoff/postgres-options#readme
@@ -21,7 +21,7 @@ library
     , bytestring
     , split
     , uri-bytestring
-    , generic-deriving
+    , generic-monoid
   default-language:    Haskell2010
   ghc-options: -Wall
                -fno-warn-unused-do-bind
@@ -30,6 +30,8 @@ library
     , RecordWildCards
     , GADTs
     , OverloadedStrings
+    , DerivingStrategies
+    , DerivingVia
 
 test-suite unit-tests
   type:                exitcode-stdio-1.0
