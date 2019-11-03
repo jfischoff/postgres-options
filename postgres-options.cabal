@@ -19,7 +19,6 @@ library
   build-depends:
       base >= 4.6 && < 5
     , bytestring
-    , either
     , split
     , uri-bytestring
     , generic-deriving
