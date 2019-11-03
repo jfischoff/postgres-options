@@ -1,6 +1,4 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE TupleSections #-}
+{-| A postgresql connection options type and related functions. -}
 
 module Database.PostgreSQL.Simple.Options
   ( Options(..)
@@ -8,7 +6,6 @@ module Database.PostgreSQL.Simple.Options
   , toConnectionString
   , parseConnectionString
   ) where
-
 import Data.Maybe (Maybe, maybeToList)
 import Data.Typeable (Typeable)
 import GHC.Generics (Generic)
@@ -105,8 +102,6 @@ defaultOptions = mempty
   , user     = pure "postgres"
   , dbname   = pure "postgres"
   }
-
-
 
 userInfoToptions :: UserInfo -> Options
 userInfoToptions UserInfo {..} = mempty { user = return $ BSC.unpack uiUsername } <> if BS.null uiPassword

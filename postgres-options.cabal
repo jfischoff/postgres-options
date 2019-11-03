@@ -32,6 +32,8 @@ library
     , OverloadedStrings
     , DerivingStrategies
     , DerivingVia
+    , TupleSections
+    , DeriveGeneric
 
 test-suite unit-tests
   type:                exitcode-stdio-1.0
