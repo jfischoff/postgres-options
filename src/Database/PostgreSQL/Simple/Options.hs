@@ -201,4 +201,7 @@ parseKeywords x = fmap mconcat . mapM (uncurry keywordToptions <=< toTuple . spl
 parseConnectionString :: String -> Either String Options
 parseConnectionString url = do
   url' <- maybe (Left "failed to parse as string") Right $ parseString url
-  parseKeywords url' <|> (uriToptions =<< parseURIStr url')
+  or (parseKeywords url') (uriToptions =<< parseURIStr url')
+  where
+    or (Left _) n = n
+    or m        _ = m 
