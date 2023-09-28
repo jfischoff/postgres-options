@@ -1,5 +1,5 @@
 name:                postgres-options
-version:             0.2.0.0
+version:             0.2.1.0
 synopsis:            An Options type representing options for postgres connections
 description:         This package exports an Options type representing options for postgres connections
 homepage:            https://github.com/jfischoff/postgres-options#readme
