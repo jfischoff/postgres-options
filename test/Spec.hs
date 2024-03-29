@@ -43,3 +43,6 @@ main = hspec $ describe "connection string parser" $ do
         { host = return "/var/lib/postgresql"
         , dbname = return "dbname"
         })
+
+  it "accepts postgres" $ parseConnectionString "postgres://localhost"
+    `shouldBe` Right (mempty { host = return "localhost" })
