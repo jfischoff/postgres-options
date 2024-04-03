@@ -178,12 +178,14 @@ queryToptions Query {..} = foldM (\acc (k, v) -> fmap (mappend acc) $ keywordTop
 
 uriToptions :: URIRef Absolute -> Either String Options
 uriToptions URI {..} = case schemeBS uriScheme of
-  "postgresql" -> do
-    queryParts <- queryToptions uriQuery
-    return $ maybe mempty authorityToOptions uriAuthority <>
-      pathToptions uriPath <> queryParts
-
-  x -> Left $ "Wrong protocol. Expected \"postgresql\" but got: " ++ show x
+  "postgres" -> options
+  "postgresql" -> options
+  x -> Left $ "Wrong protocol. Expected \"postgres\" or \"postgresql\" but got: " ++ show x
+  where
+    options = do
+      queryParts <- queryToptions uriQuery
+      return $ maybe mempty authorityToOptions uriAuthority <>
+        pathToptions uriPath <> queryParts
 
 parseURIStr :: String -> Either String (URIRef Absolute)
 parseURIStr = left show . parseURI strictURIParserOptions . BSC.pack where
